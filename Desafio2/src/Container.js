@@ -1,10 +1,9 @@
-
-const fs = require('fs');
+import fs from 'fs';
 
 class Contenedor{
 
     constructor(nombre){
-        this.nombreArchivo = `./${nombre}.txt`;
+        this.nombreArchivo = `src/db/${nombre}.json`;
     }
 
     // Recibe objeto, lo guarda en el archivo y devuelve el id asignado
@@ -47,9 +46,10 @@ class Contenedor{
             const elements = JSON.parse(file);
             return elements;
           } catch (error) {
-
-            await fs.promises.writeFile(this.nombreArchivo, JSON.stringify([], null, 3));
-            return [];
+            if (error.code == 'ENOENT'){
+                await fs.promises.writeFile(this.nombreArchivo, JSON.stringify([], null, 3));
+                return []; 
+            }
           }
     }
 
@@ -75,38 +75,4 @@ class Contenedor{
     }
 }
 
-
-
-const producto = new Contenedor('productos');
-
-const obj1 = {
-    title: "Escuadra", 
-    price: 25.34, 
-    thumbnail: "url1"
-};
-
-const obj2 = {
-    title: "Calculadora", 
-    price: 30.56, 
-    thumbnail: "url2"
-};
-const obj3 = {
-    title: "Globo Terraqueo", 
-    price: 45.78, 
-    thumbnail: "url3"
-};
-
-producto.save(obj1)
-.then(() => producto.save(obj2))
-.then(data => console.log(`Id : ${data}`))
-.then(() => producto.save(obj3))
-.then(data => console.log(`Id: ${data}`))
-
-.then(() => producto.getAll().then(data => console.log(data)))
-.then(() => producto.getById(2)).then(data => console.log(data))
-
-.then(() => producto.deleteById(3)).then(() => console.log('elemento 3 eliminado'))
-
-.then(() => producto.deleteAll())
-
-
+export {Contenedor};
