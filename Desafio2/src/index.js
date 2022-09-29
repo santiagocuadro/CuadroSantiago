@@ -1,13 +1,13 @@
 
 //const fs = require('fs');
 import {Contenedor} from "./Container.js";
-import express from "express";
+import express from "express";  
 
-
+const app = express();
 const PORT = process.env.PORT || 8080;
+
+
 const producto = new Contenedor('productos');
-
-
 const obj1 = {
     title: "Escuadra", 
     price: 25.34, 
@@ -25,53 +25,33 @@ const obj3 = {
     thumbnail: "url3"
 };
 
-producto.save(obj1)
-.then(() => producto.save(obj2))
-.then(data => console.log(`Id : ${data}`))
-.then(() => producto.save(obj3))
-.then(data => console.log(`Id: ${data}`))
-
-.then(() => producto.getAll().then(data => console.log(data)))
-.then(() => producto.getById(2)).then(data => console.log(data))
-
-.then(() => producto.deleteById(3)).then(() => console.log('elemento 3 eliminado'))
-
-.then(() => producto.deleteAll())
+// producto.save(obj1)
+// .then(() => producto.save(obj2))
+// .then(() => producto.save(obj3))
 
 
-
-
-
-
-const randomFunction=(limite)=>{
-    return parseInt(Math.random()*limite) + 1
+const getRandom = limite =>{
+    return parseInt(Math.random() * limite);
 }
-
-app.get('/productos',(req,res)=>{
-    documento.getAll()
-        .then( lista=>{
-            JSON.parse(lista) 
-        })
-        .then( listaParse=>{
-            res.json(listaParse )
-        })
+ 
+app.get('/productos', (req,res) => {
+   producto.getAll()
+   .then(listaParse => {
+        res.json(listaParse);
+   })
 })
 
-app.get('/productoRandom',(req,res)=>{
-    documento.getAll()
-    .then( lista=>
-       JSON.parse(lista) 
-    )
-    .then( listaParse =>
-        listaParse[randomFunction(listaParse.length)]
-    )
-    .then( itemLista=>
-        res.json(itemLista) 
-    )
+app.get('/productoRandom',(req,res) => {
+    producto.getAll()
+    .then( lista => {
+        const limite = lista.length;
+        res.json(lista[getRandom(limite)]);
+    })
 })
-app.listen( PORT, () => console.log(`Server listening on PORT ${PORT}`));
 
 
+const server = app.listen( PORT, () => console.log(`Server listening on PORT ${PORT}`));
+server.on("error", error => console.log(`error en el servidor ${error}`));
 
 
 
