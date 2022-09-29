@@ -1,11 +1,10 @@
-
-//const fs = require('fs');
 import {Contenedor} from "./Container.js";
 import express from "express";  
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-
+const server = app.listen( PORT, () => console.log(`Server listening on PORT ${PORT}`));
+server.on("error", error => console.log(`error en el servidor ${error}`));
 
 const producto = new Contenedor('productos');
 const obj1 = {
@@ -48,10 +47,6 @@ app.get('/productoRandom',(req,res) => {
         res.json(lista[getRandom(limite)]);
     })
 })
-
-
-const server = app.listen( PORT, () => console.log(`Server listening on PORT ${PORT}`));
-server.on("error", error => console.log(`error en el servidor ${error}`));
 
 
 
