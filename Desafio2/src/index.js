@@ -1,10 +1,12 @@
 
 //const fs = require('fs');
 import {Contenedor} from "./Container.js";
+import express from "express";
 
 
-
+const PORT = process.env.PORT || 8080;
 const producto = new Contenedor('productos');
+
 
 const obj1 = {
     title: "Escuadra", 
@@ -35,6 +37,39 @@ producto.save(obj1)
 .then(() => producto.deleteById(3)).then(() => console.log('elemento 3 eliminado'))
 
 .then(() => producto.deleteAll())
+
+
+
+
+
+
+const randomFunction=(limite)=>{
+    return parseInt(Math.random()*limite) + 1
+}
+
+app.get('/productos',(req,res)=>{
+    documento.getAll()
+        .then( lista=>{
+            JSON.parse(lista) 
+        })
+        .then( listaParse=>{
+            res.json(listaParse )
+        })
+})
+
+app.get('/productoRandom',(req,res)=>{
+    documento.getAll()
+    .then( lista=>
+       JSON.parse(lista) 
+    )
+    .then( listaParse =>
+        listaParse[randomFunction(listaParse.length)]
+    )
+    .then( itemLista=>
+        res.json(itemLista) 
+    )
+})
+app.listen( PORT, () => console.log(`Server listening on PORT ${PORT}`));
 
 
 
