@@ -3,7 +3,7 @@ import fs from 'fs';
 class Contenedor{
 
     constructor(nombre){
-        this.nombreArchivo = `src/db/${nombre}.json`;
+        this.nombreArchivo = `src/db/${nombre}.txt`;
     }
 
     // Recibe objeto, lo guarda en el archivo y devuelve el id asignado
@@ -46,10 +46,10 @@ class Contenedor{
             const elements = JSON.parse(file);
             return elements;
           } catch (error) {
-            if (error.code == 'ENOENT'){
+            //if (error.code == 'ENOENT'){
                 await fs.promises.writeFile(this.nombreArchivo, JSON.stringify([], null, 3));
-                return []; 
-            }
+                return [];
+            //}
           }
     }
 

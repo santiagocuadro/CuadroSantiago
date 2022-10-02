@@ -1,15 +1,18 @@
 {
-  "name": "desafio2",
+  "name": "desafio-3",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node run src/index.js",
-    "dev": "nodemon src/index.js --ignore /*.json",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js --ignore /*.txt",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
