@@ -7,27 +7,6 @@ const PORT = process.env.PORT || 8080;
 
 
 const producto = new Contenedor('productos');
-const obj1 = {
-    title: "Escuadra", 
-    price: 25.34, 
-    thumbnail: "url1"
-};
-
-const obj2 = {
-    title: "Calculadora", 
-    price: 30.56, 
-    thumbnail: "url2"
-};
-const obj3 = {
-    title: "Globo Terraqueo", 
-    price: 45.78, 
-    thumbnail: "url3"
-};
-
-// producto.save(obj1)
-// .then(() => producto.save(obj2))
-// .then(() => producto.save(obj3))
-
 
 const getRandom = limite =>{
     return parseInt(Math.random() * limite);
