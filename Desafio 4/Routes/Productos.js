@@ -1,9 +1,7 @@
 import express from "express";
-//import {Contenedor} from "../Server/Container.js";
 
 const router = express.Router();
 
-//const productos = new Contenedor('productos');
 const productos = [
     {
         title: "santi",
