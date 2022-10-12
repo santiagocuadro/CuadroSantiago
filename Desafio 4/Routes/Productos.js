@@ -19,42 +19,44 @@ router.get('/', async (req, res) => {
 
 //devuelve un producto segun su id
 router.get('/:id', async (req, res) => {
-    const id = req.params.id;
+    const {id} = req.params;
     const foundElement = productos.find((element) => element.id == id);
     res.json(foundElement == undefined ? {error: 'producto no encontrado'} : foundElement)
 })
 
 //recibe y agrega un producto y lo devuelve con su id asignado
 router.post('/', async(req, res) => {
-    const { title, price, thumbnail } = req.body;
-    let prod = { title, price, thumbnail };
-    console.log(prod)
-    await productos.save({ title, price, thumbnail })
-    .then( (dato) => {
-        res.json(dato)
-    })
+    const prod = req.body;
+    let id = 1;
+    if(productos.length !== 0){
+        id = productos[productos.length - 1].id + 1;
+    }
+    prod.id = id;
+    productos.push(prod);
+    res.status(200).send('Producto agregado');
 })
 
 //recibe y actualiza un producto segun su id
 router.put('/:id', async(req, res) => {
     const {id} = req.params;
-    //const { title, price, thumbnail } = req.body;
-    
-    await productos.getById(id)
-    .then(() => {
-
-    })
-    
+    const prod = req.body;
+    prod.id = parseInt(id);
+    const foundElement = productos.find((element) => element.id == id);
+    if(foundElement === undefined){
+        res.json({error: "el producto no existe"})
+    }else{
+        res.json(productos.splice(id-1, 1, obj));
+    }
 })
 
 router.delete('/:id', (req, res) => {
-    // const arrayId = req.path.split(":");
-    // const id = parseInt(arrayId[arrayId.length - 1]);
-    // productos.forEach( (element, index) => {
-    //     if (element.id === id){
-    //         productos[index] = {};
-    //     }
-    // })
+    const {id} = req.params;
+    const foundElement = productos.find((element) => element.id == id);
+    if(foundElement === undefined){
+        res.json({error: "el producto no existe"});
+    }else{
+        res.json(productos.splice(id-1, 1));
+    }
 })
 
 
