@@ -3,12 +3,14 @@ import fs from 'fs'
 class Contenedor{
 
     constructor(nombre){
-        this.nombreArchivo = `src/db/${nombre}.txt`;
+        this.nombreArchivo = `./Server/${nombre}.json`;
     }
 
     // Recibe objeto, lo guarda en el archivo y devuelve el id asignado
     async save(obj){
         try {
+            obj['id'] = 0;
+            console.log(obj);
             const arrayObj = await this.getAll();
             
             let id;
@@ -20,7 +22,7 @@ class Contenedor{
             obj.id = id;
             arrayObj.push(obj);
             await fs.promises.writeFile(this.nombreArchivo, JSON.stringify(arrayObj, null, 3))
-            return obj.id;
+            return obj;
         } catch (error) {
             console.log(`Error en Save: ${error}`);
         }
@@ -33,9 +35,11 @@ class Contenedor{
 
             const foundElement = elements.find((element) => element.id == id);
 
-            if (!foundElement) return null;
-
-            return foundElement;
+            if (!foundElement){
+                return null;
+            }else{
+                return foundElement;
+            }             
         } catch (error) { console.log(`Error en getById: ${error}`) }
     }
 
