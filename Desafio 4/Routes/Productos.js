@@ -1,60 +1,57 @@
 import express from "express";
+import {ContainerMemory} from "../Containers/Container.js";
+
 
 const router = express.Router();
 
-const productos = [
-    {
-        title: "santi",
-        price: 34,
-        thumbnail: "asdf",
-        id: 1
-    }
-];
+const productsMemory = new ContainerMemory();
 
-router.get('/', async (req, res) => {
-    res.json(productos);
+router.get('/', (req, res) => {
+    const products = productsMemory.getAll();
+    res.json({products});
 })
 
 //devuelve un producto segun su id
-router.get('/:id', async (req, res) => {
-    const {id} = req.params;
-    const foundElement = productos.find((element) => element.id == id);
-    res.json(foundElement == undefined ? {error: 'producto no encontrado'} : foundElement)
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    const product = productsMemory.getById(Number(id));
+
+    if (!product) {
+        return res.send({
+        data: undefined,
+        message: "Product not found",
+        });
+    }
+
+    res.send({ data: product });
 })
 
+
 //recibe y agrega un producto y lo devuelve con su id asignado
-router.post('/', async(req, res) => {
-    const prod = req.body;
-    let id = 1;
-    if(productos.length !== 0){
-        id = productos[productos.length - 1].id + 1;
-    }
-    prod.id = id;
-    productos.push(prod);
-    res.status(200).send('Producto agregado');
+router.post('/', (req, res) => {
+    const {title, price, thumbnail} = req.body;
+    const product = productsMemory.save({title, price, thumbnail});
+    res.send({data: product});
 })
 
 //recibe y actualiza un producto segun su id
-router.put('/:id', async(req, res) => {
-    const {id} = req.params;
-    const prod = req.body;
-    prod.id = parseInt(id);
-    const foundElement = productos.find((element) => element.id == id);
-    if(foundElement === undefined){
-        res.json({error: "el producto no existe"})
-    }else{
-        res.json(productos.splice(id-1, 1, obj));
-    }
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const { title, price, thumbnail } = req.body;
+
+    const updatedProduct = productsMemory.updateById(id, {
+        title,
+        price,
+        thumbnail,
+    });
+
+    res.send({ success: true, data: { updated: updatedProduct } });
 })
 
 router.delete('/:id', (req, res) => {
-    const {id} = req.params;
-    const foundElement = productos.find((element) => element.id == id);
-    if(foundElement === undefined){
-        res.json({error: "el producto no existe"});
-    }else{
-        res.json(productos.splice(id-1, 1));
-    }
+    const { id } = req.params;
+    productsMemory.deleteById(Number(id));
+    res.send({ success: true })
 })
 
 
