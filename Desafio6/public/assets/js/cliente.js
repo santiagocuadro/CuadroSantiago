@@ -52,7 +52,7 @@ const renderizadoMensajes = async (messages) => {
     "🚀 ~ file: cliente.js ~ line 54 ~ renderizadoMensajes ~ messages",
     messages
   );
-  const respuesta = await fetch("../assets/templates/chat.template.handlebars");
+  const respuesta = await fetch("/assets/templates/chat.templates.handlebars");
   const template = await respuesta.text();
   // compile the template
   const compiledTemplate = Handlebars.compile(template);

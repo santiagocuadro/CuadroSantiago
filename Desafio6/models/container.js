@@ -2,7 +2,7 @@ import fs from "fs";
 
 class Container {
   constructor(nombre) {
-    this.nombreArchivo = `/db/${nombre}.json`;
+    this.nombreArchivo = `./db/${nombre}.json`;
   }
 
   // Recibe objeto, lo guarda en el archivo y devuelve el id asignado
@@ -49,14 +49,13 @@ class Container {
     try {
       const file = await fs.promises.readFile(this.nombreArchivo, "utf8");
       const elements = JSON.parse(file);
-      result = elements;
+      return elements;
     } catch (error) {
       await fs.promises.writeFile(
         this.nombreArchivo,
         JSON.stringify([], null, 3)
       );
-    } finally {
-      return result;
+      return [];
     }
   }
 
