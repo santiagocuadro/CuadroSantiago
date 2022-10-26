@@ -1,9 +1,8 @@
 const socket = io("http://localhost:8080");
 
-/* -------------------------------- PRODUCTOS ------------------------------- */
 const productForm = document.getElementById("product-form");
 const productsContainer = document.getElementById("products");
-/* ---------------------------------- CHAT ---------------------------------- */
+
 const chatForm = document.getElementById("chat");
 const chatContainer = document.getElementById("chatContainer");
 
@@ -24,19 +23,17 @@ socket.on("all products", (allProduct) => {
   renderizadoProductos(allProduct);
 });
 
-const renderizadoProductos = (products) => {
-  const respuesta = fetch("/assets/templates/product.template.handlebars");
-  const template = respuesta.text();
+const renderizadoProductos = async (products) => {
+  const respuesta = await fetch(
+    "/assets/templates/product.template.handlebars"
+  );
+  const template = await respuesta.text();
   // compile the template
   const compiledTemplate = Handlebars.compile(template);
   // execute the compiled template and print the output to the console
   const html = compiledTemplate({ products });
   productsContainer.innerHTML = html;
 };
-
-/* -------------------------------------------------------------------------- */
-/*                                    CHAT                                    */
-/* -------------------------------------------------------------------------- */
 
 chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -50,13 +47,13 @@ socket.on("all message", (allMessage) => {
   renderizadoMensajes(allMessage);
 });
 
-const renderizadoMensajes = (messages) => {
+const renderizadoMensajes = async (messages) => {
   console.log(
     "🚀 ~ file: cliente.js ~ line 54 ~ renderizadoMensajes ~ messages",
     messages
   );
-  const respuesta = fetch("/assets/templates/chat.template.handlebars");
-  const template = respuesta.text();
+  const respuesta = await fetch("../assets/templates/chat.template.handlebars");
+  const template = await respuesta.text();
   // compile the template
   const compiledTemplate = Handlebars.compile(template);
   // execute the compiled template and print the output to the console

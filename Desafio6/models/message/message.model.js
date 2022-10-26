@@ -1,5 +1,5 @@
-import { Container } from "../Container.js";
+import { Container } from "../container.js";
 
-const Messages = new Container("Messages");
+const Message = new Container("Messages");
 
-export { Messages };
+export { Message };

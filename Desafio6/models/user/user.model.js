@@ -1,4 +1,5 @@
-const Container = require("../container");
+//const Container = require("../container");
+import { Container } from "../container.js";
 
 class User extends Container {
   constructor(archivo) {
@@ -20,4 +21,5 @@ class User extends Container {
 
 const Users = new User("Users");
 
-module.exports = Users;
+//module.exports = Users;
+export { User };

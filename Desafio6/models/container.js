@@ -1,97 +1,94 @@
-const fSync = require("fs");
-const path = require("path");
-const fs = fSync.promises;
+import fs from "fs";
 
 class Container {
-  constructor(archivo) {
+  constructor(nombre) {
+    this.nombreArchivo = `/db/${nombre}.json`;
+  }
+
+  // Recibe objeto, lo guarda en el archivo y devuelve el id asignado
+  async save(obj) {
     try {
-      this.filepath = path.join(process.cwd(), `/db/${archivo}.json`);
-      fSync.writeFileSync(this.filepath, "[]");
+      const arrayObj = await this.getAll();
+
+      let id;
+      if (arrayObj.length === 0) {
+        id = 1;
+      } else {
+        id = arrayObj[arrayObj.length - 1].id + 1;
+      }
+      obj.id = id;
+      arrayObj.push(obj);
+      await fs.promises.writeFile(
+        this.nombreArchivo,
+        JSON.stringify(arrayObj, null, 3)
+      );
+      return obj.id;
     } catch (error) {
-      console.log(`Error en el constructor: ${error.message}`);
+      console.log(`Error en Save: ${error}`);
     }
   }
 
-  async getData() {
-    try {
-      const data = await fs.readFile(this.filepath, "utf-8");
-      const arrayData = JSON.parse(data);
-      // Devuelvo el ultimo id utilizado incrementado en 1
-      if (arrayData.length)
-        return { newId: arrayData.at(-1).id + 1, data: arrayData };
-      return { newId: 1, data: arrayData };
-    } catch (error) {
-      console.log(`Error al leer un archivo: ${error.message}`);
-    }
-  }
-
-  async save(payload) {
-    try {
-      const { newId, data } = await this.getData();
-      data.push({ ...payload, id: newId });
-      await fs.writeFile(this.filepath, JSON.stringify(data, null, 2));
-    } catch (error) {
-      console.log(`Error al guardar un objeto: ${error.message}`);
-    }
-  }
-
-  async updateById(payload, id) {
-    try {
-      const { data } = await this.getData();
-      const indexFound = data.findIndex((element) => element.id === Number(id));
-      // Caso no existe objeto con el id indicado
-      if (indexFound === -1) throw new Error("Elemento no encontrado");
-      // Reemplazo el elemento indicado
-      data.splice(indexFound, 1, { ...payload, id });
-      await fs.writeFile(this.filepath, JSON.stringify(data, null, 2));
-    } catch (error) {
-      console.log(`Error al eliminar un objeto: ${error.message}`);
-    }
-  }
-
+  // Recibe un id y devuelve el objeto con ese id, o null si no esta
   async getById(id) {
     try {
-      const { data } = await this.getData();
-      const foundData = data.find((element) => element.id === Number(id));
-      if (!foundData) throw new Error("Elemento no encontrado");
-      return foundData;
+      const elements = await this.getAll();
+
+      const foundElement = elements.find((element) => element.id == id);
+
+      if (!foundElement) return null;
+
+      return foundElement;
     } catch (error) {
-      console.log(`Error al obtener un objeto por su id: ${error.message}`);
+      console.log(`Error en getById: ${error}`);
     }
   }
 
+  // Devuelve un array con los objetos presentes en el archivo
   async getAll() {
+    let result = [];
     try {
-      const { data } = await this.getData();
-      return data;
+      const file = await fs.promises.readFile(this.nombreArchivo, "utf8");
+      const elements = JSON.parse(file);
+      result = elements;
     } catch (error) {
-      console.log(`Error al obtener todos los objetos: ${error.message}`);
-    }
-  }
-
-  async deleteById(id) {
-    try {
-      const { data } = await this.getData();
-      const indexFound = data.findIndex(
-        (element) => Number(element.id) === Number(id)
+      await fs.promises.writeFile(
+        this.nombreArchivo,
+        JSON.stringify([], null, 3)
       );
-      // Caso no existe objeto con el id indicado
-      if (indexFound === -1) throw new Error("Elemento no encontrado");
-      // Elimino el elemento indicado
-      data.splice(indexFound, 1);
-      await fs.writeFile(this.filepath, JSON.stringify(data, null, 2));
-    } catch (error) {
-      console.log(`Error al eliminar un objeto: ${error.message}`);
+    } finally {
+      return result;
     }
   }
 
+  // Elimina del archivo el objeto con el id buscado
+  async deleteById(number) {
+    try {
+      let archivo = await this.getAll();
+      const index = archivo.findIndex((element) => element.id === number);
+
+      if (index === -1) return "No se encontro el elemento";
+
+      const result = archivo.filter((element) => element.id !== number);
+      await fs.promises.writeFile(
+        this.nombreArchivo,
+        JSON.stringify(result, null, 3)
+      );
+    } catch (error) {
+      console.log(`Error en getById: ${error}`);
+    }
+  }
+
+  // Elimina todos los objetos presentes en el archivo
   async deleteAll() {
     try {
-      await fs.writeFile(this.filepath, "[]");
+      await fs.promises.writeFile(
+        this.nombreArchivo,
+        JSON.stringify([], null, 3)
+      );
     } catch (error) {
-      console.log(`Error al eliminar todos los objetos: ${error.message}`);
+      console.log(error);
     }
   }
 }
 
-module.exports = Container;
+export { Container };

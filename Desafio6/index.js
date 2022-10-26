@@ -6,10 +6,10 @@ import customParseFormat from "dayjs/plugin/customParseFormat.js";
 
 dayjs.extend(customParseFormat);
 
-// const Product = require("./models/product/product.model");
-import Product from "./models/product/product.model.js";
-// const Message = require("./models/message/message.model");
-import Message from "./models/message/message.model.js";
+//const Product = require("./models/product/product.model");
+import { Product } from "./models/product/product.model.js";
+//const Message = require("./models/message/message.model");
+import { Message } from "./models/message/message.model.js";
 
 const app = express();
 const httpServer = new HttpServer(app);

@@ -1,5 +1,5 @@
-import { Container } from "../Container.js";
+import { Container } from "../container.js";
 
-const Products = new Container("Products");
+const Product = new Container("Products");
 
-export { Products };
+export { Product };
