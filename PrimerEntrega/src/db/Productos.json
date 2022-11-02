@@ -53,10 +53,10 @@
       "nombre": "nuevo4",
       "descripcion": "este es el nuevo elemento 4",
       "codigo": 1234,
-      "foto": "asdfsfdasdfa",
+      "foto": "asdfassfdasdfa",
       "precio": 500234432100,
       "stock": 535,
-      "timestamp": "1/11/2022 22:07:33",
+      "timestamp": "2/11/2022 16:09:54",
       "id": 8
    },
    {
@@ -97,5 +97,25 @@
       "stock": 55,
       "timestamp": "1/11/2022 22:05:52",
       "id": 12
+   },
+   {
+      "nombre": "santi",
+      "descripcion": "hola",
+      "codigo": 1234,
+      "foto": "foto",
+      "precio": 50000,
+      "stock": 55,
+      "timestamp": "2/11/2022 16:10:19",
+      "id": 13
+   },
+   {
+      "nombre": "santi",
+      "descripcion": "hola",
+      "codigo": 1234,
+      "foto": "foto",
+      "precio": 50000,
+      "stock": 55,
+      "timestamp": "2/11/2022 16:10:20",
+      "id": 14
    }
 ]
