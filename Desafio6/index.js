@@ -15,7 +15,7 @@ const app = express();
 const httpServer = new HttpServer(app);
 const io = new SocketIOServer(httpServer);
 
-const PORT = 8080;
+const PORT = 8000;
 
 app.use(express.static("./public"));
 
