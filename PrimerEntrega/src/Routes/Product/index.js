@@ -5,6 +5,19 @@ import {verifyRole} from "../../middlewares/verifyRole.js";
 
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  try {
+    const product = await ProductosApi.getAll();
+
+    if (!product) {
+      return res.send({ error: true });
+    }
+
+    res.send(product);
+  } catch (error) {
+    res.send({ error: "Internal server error" });
+  }
+});
 
 // Me permite listar todos los productos disponibles o un producto por su id
 // (discponible para usuarios y administradores)

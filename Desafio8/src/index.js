@@ -17,7 +17,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 io.on("connection", async (socket) => {
-  console.log(`Nuevo cliente conectado ${socket.id}`);
 
   socket.emit("mensajes", await MessagesDao.getAll());
 

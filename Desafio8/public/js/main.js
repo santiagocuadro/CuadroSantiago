@@ -23,7 +23,7 @@ socket.on("mensajes", (mensajes) => {
   let mensajesHtml = mensajes
     .map(
       (mensaje) =>
-        `<span>${mensaje.timestamp}<b> ${mensaje.email}: </b>${mensaje.text}</span>`
+        `<span class="mensaje-listaMensajes">${mensaje.timestamp}<b> ${mensaje.email}: </b>${mensaje.text}</span>`
     )
     .join("<br>");
 

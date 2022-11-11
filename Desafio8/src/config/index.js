@@ -13,7 +13,7 @@ const DATABASES = {
   },
 };
 
-const selectedDB = process.env.SELECTED_DATABASE ?? DATABASES.sql.name;
+const selectedDB = process.env.SELECTED_DATABASE ?? DATABASES.memory.name;
 
 const config = {
   SERVER: {

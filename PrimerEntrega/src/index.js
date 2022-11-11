@@ -8,6 +8,8 @@ app.use(express.urlencoded({ extended: true }));
 
 const PORT = 8080;
 
+app.use(express.static("public"));
+
 app.use("/api/productos", routerProducts);
 app.use("/api/carrito", routerCarrito);
 

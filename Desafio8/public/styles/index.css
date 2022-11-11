@@ -5,3 +5,8 @@ html {
 #product-form_container {
     height: 100px;
 }
+
+.mensaje-listaMensajes {
+    padding: 1rem 0;
+    color: rgba(0, 0, 255, 0.622);
+}
