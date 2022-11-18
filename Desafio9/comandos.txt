@@ -1,0 +1,31 @@
+use ecommerse
+
+db.createCollection("mensajes")
+db.createCollection("productos")
+
+db.productos.insert([{"title": "product1", "price": 150, "thumbnail": "url1"},{"title": "product2", "price": 500, "thumbnail": "url2"},{"title": "product3", "price": 1500, "thumbnail": "url1"},{"title": "product4", "price": 3200, "thumbnail": "url1"},{"title": "product5", "price": 400, "thumbnail": "url1"},{"title": "product6", "price": 2050, "thumbnail": "url1"},{"title": "product7", "price": 680, "thumbnail": "url1"},{"title": "product8", "price": 234, "thumbnail": "url8"},{"title": "product9", "price": 3456, "thumbnail": "url9"},{"title": "product10", "price": 1340, "thumbnail": "url10"}])
+db.mensajes.insert([{"email": "email1@gmail.com", "text": "mensaje1"},{"email": "email_2@gmail.com", "text": "mensaje2"},{"email": "email_3@gmail.com", "text": "mensaje3"},{"email": "email_4@gmail.com", "text": "mensaje4"},{"email": "email_5@gmail.com", "text": "mensaje5"},{"email": "email_6@gmail.com", "text": "mensaje6"},{"email": "email_7@gmail.com", "text": "mensaje7"},{"email": "email_8@gmail.com", "text": "mensaje8"},{"email": "email_9@gmail.com", "text": "mensaje9"},{"email": "email_10@gmail.com", "text": "mensaje10"}])
+
+db.productos.find()
+db.mensajes.find()
+
+db.productos.countDocuments()
+db.mensajes.countDocuments()
+
+db.productos.insertOne({"title": "productExtra", "price": 4870, "thumbnail": "urlExtra"})
+
+db.productos.find({price: {$lt: 1000}})
+
+db.productos.find({$and: [ {price: {$gte: 1000} }, {price:  {$lte: 3000} }]})
+
+db.productos.find({price: {$gt: 3000}})
+
+db.productos.find({},{"title": 1, "_id": 0}).sort({price:1}).limit(1).skip(2)
+
+db.productos.update({},{$set:{"stock": 100}},{upsert:false,multi:true})
+
+db.productos.update({price: {$gt: 4000}},{$set:{"stock": 0}},{multi:true})
+
+db.productos.deleteMany({price: {$lt: 1000}})
+
+db.createUser({"user": "pepe", "pwd": "asd456", })

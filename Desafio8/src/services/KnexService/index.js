@@ -49,7 +49,7 @@ const createMessagesTable = async (selectedKnex) => {
 const init = async () => {
   // acá le paso el knex que quiero, para crear cada tabla en la DB que quiero (podriamos usar productos con mysql y messages en sqlite como pide la consigna, pero si se fijan en DAO/index.js, yo puse que las dos sean mysql  )
   await createProductTable(KnexMySQL);
-  await createMessagesTable(KnexMySQL);
+  await createMessagesTable(KnexSqlite);
 };
 
 const KnexService = {
