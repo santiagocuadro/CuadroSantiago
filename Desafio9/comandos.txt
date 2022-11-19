@@ -28,4 +28,4 @@ db.productos.update({price: {$gt: 4000}},{$set:{"stock": 0}},{multi:true})
 
 db.productos.deleteMany({price: {$lt: 1000}})
 
-db.createUser({"user": "pepe", "pwd": "asd456", })
+db.createUser({"user": "pepe", "pwd": "asd456", "roles": [{role: "read", db: "ecommerce"}]})
