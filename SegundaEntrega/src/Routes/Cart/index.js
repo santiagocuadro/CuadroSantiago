@@ -1,6 +1,6 @@
 import express from "express";
-import { CarritoApi } from "../../Api/CarritoApi.js";
-import { ProductosApi } from "../../Api/ProductosApi.js";
+import { CartDao } from "../../Dao/index.js";
+import { ProductDao } from "../../Dao/index.js";
 import { DATE_UTILS } from "../../utils/index.js";
 
 const router = express.Router();
@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const baseCart = { timestamp: DATE_UTILS.getTimestamp(), products: [] };
-    const cart = await CarritoApi.save(baseCart);
+    const cart = await CartDao.save(baseCart);
     res.send({ success: true, cartId: cart.id });
   } catch (error) {
     res.send({ success: false});
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    await CarritoApi.deleteById(Number(id));
+    await CartDao.deleteById(Number(id));
 
     res.send({ success: true });
   } catch (error) {
@@ -33,7 +33,7 @@ router.delete("/:id", async (req, res) => {
 router.get("/:id/productos", async (req, res) => {
   try {
     const { id } = req.params;
-    const cart = await CarritoApi.getById(Number(id));
+    const cart = await CartDao.getById(Number(id));
     const products = cart.products;
     res.send({success: true, productos: products})
   } catch (error) {
@@ -46,13 +46,13 @@ router.post("/:id/productos", async (req, res) => {
   try {
     const { productId } = req.body;
     const { id } = req.params;
-    const cart = await CarritoApi.getById(Number(id));
+    const cart = await CartDao.getById(Number(id));
 
     if (!cart) {
       return res.send({ success: false, message: "carrito vacio" });
     }
 
-    const product = await ProductosApi.getById(Number(productId));
+    const product = await ProductDao.getById(Number(productId));
 
     if (!product) {
       return res.send({ success: false, message: "lista de productos vacia" });
@@ -60,7 +60,7 @@ router.post("/:id/productos", async (req, res) => {
 
     cart.products.push(product);
 
-    const updatedCart = await CarritoApi.updateById(Number(id), cart);
+    const updatedCart = await CartDao.updateById(Number(id), cart);
 
     res.send({ success: true, cart: updatedCart });
   } catch (error) {
@@ -73,7 +73,7 @@ router.delete("/:id/productos/:id_prod", async (req, res) => {
   try {
     const { id_prod } = req.params;
     const { id } = req.params;
-    const cart = await CarritoApi.getById(Number(id));
+    const cart = await CartDao.getById(Number(id));
 
     if (!cart) {
       return res.send({ success: false, message: "Carrito no encontrado" });
@@ -84,7 +84,7 @@ router.delete("/:id/productos/:id_prod", async (req, res) => {
     if (index === -1) return res.send({success: false, message: "producto no encontrado"});
 
     cart.products = cart.products.filter((element) => element.id !== Number(id_prod));
-    await CarritoApi.updateById(Number(id), cart);
+    await CartDao.updateById(Number(id), cart);
     
     res.send({ success: true , result: cart.products});
   } catch (error) {

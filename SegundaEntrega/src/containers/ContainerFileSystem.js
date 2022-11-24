@@ -1,6 +1,6 @@
 import fs from "fs";
 
-class Container {
+class ContainerFileSystem {
 
   constructor(nombre) {
     this.nombreArchivo = `./src/db/${nombre}.json`;
@@ -110,4 +110,4 @@ class Container {
 
 }
 
-export { Container };
+export { ContainerFileSystem };

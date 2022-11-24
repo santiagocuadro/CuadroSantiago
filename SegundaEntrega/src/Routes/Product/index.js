@@ -1,5 +1,5 @@
 import express from "express";
-import { ProductosApi } from "../../Api/ProductosApi.js";
+import { ProductDao } from "../../Dao/index.js";
 import { DATE_UTILS } from "../../utils/index.js";
 import {verifyRole} from "../../middlewares/verifyRole.js";
 
@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const product = await ProductosApi.getAll();
+    const product = await ProductDao.getAll();
 
     if (!product) {
       return res.send({ error: true });
@@ -26,10 +26,10 @@ router.get("/:id?", async (req, res) => {
     const { id } = req.params;
 
     if(id !== undefined){
-      const products = await ProductosApi.getById(Number(id));  
+      const products = await ProductDao.getById(Number(id));  
       res.send({products: products});
     }else {
-      const products = await ProductosApi.getAll();  
+      const products = await ProductDao.getAll();  
       res.send(products);
     }
   } catch (error) {
@@ -43,7 +43,7 @@ router.post("/", verifyRole,async (req, res) => {
   try {
     const { nombre, descripcion, codigo, foto, precio, stock } = req.body;
     const product = { nombre, descripcion, codigo, foto, precio, stock, timestamp:DATE_UTILS.getTimestamp() };
-    const productoCompleto = await ProductosApi.save(product);
+    const productoCompleto = await ProductDao.save(product);
 
     res.send({product: productoCompleto});
   } catch (error) {
@@ -57,7 +57,7 @@ router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { nombre, descripcion, codigo, foto, precio, stock } = req.body;
-    const updatedProduct = await ProductosApi.updateById(
+    const updatedProduct = await ProductDao.updateById(
       id, 
       { nombre, descripcion, codigo, foto, precio, stock, timestamp:DATE_UTILS.getTimestamp() }
     );
@@ -73,7 +73,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    await ProductosApi.deleteById(Number(id));
+    await ProductDao.deleteById(Number(id));
     res.send({ success: true });
   } catch (error) {
     res.send({ success: false });
