@@ -1,7 +1,8 @@
 import { config } from "../config/index.js";
 import { MongoDBService } from "../services/index.js";
+import { FirebaseDBService } from '../services/index.js';
 import { CartsMongo, CartsFilesystem, CartsMemory } from "./Cart/index.js";
-import { ProductsMongo, ProductsFilesystem, ProductsMemory } from "./Products/index.js";
+import { ProductsFirebase, ProductsMongo, ProductsFilesystem, ProductsMemory } from "./Products/index.js";
 
 const getSelectedDaos = () => {
   switch (config.SERVER.SELECTED_DATABASE) {
@@ -22,6 +23,13 @@ const getSelectedDaos = () => {
       return {
         ProductDao: new ProductsMemory(),
         CartDao: new CartsMemory(),
+      };
+    }
+    case "firebase": {
+      FirebaseDBService.init();
+      return {
+        ProductDao: new ProductsFirebase(),
+        CartDao: new CartsFirebase(),
       };
     }
   }
