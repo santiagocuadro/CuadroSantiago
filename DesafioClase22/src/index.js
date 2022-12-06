@@ -1,7 +1,10 @@
 import express from "express";
-import { Server as IOServer } from "socket.io";
 import { Server as HttpServer } from "http";
-import { routerProducts, routerMessages, routerTest } from "./Routes/index.js";
+import { Server as IOServer } from "socket.io";
+import { MessagesDao, ProductDao } from "./Dao/index.js";
+import { routerTest } from "./Routes/Products-test.js";
+
+const PORT = 8080;
 
 const app = express();
 
@@ -11,37 +14,33 @@ const io = new IOServer(httpServer);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
-const PORT = 8080;
-
 app.use(express.static("public"));
-
 
 io.on("connection", async (socket) => {
 
   socket.emit("mensajes", await MessagesDao.getAll());
 
-  socket.on("mensajeNuevo", async ({ email, text }) => {
-    const message = { email, text, timestamp: DATE_UTILS.getTimestamp() };
+  socket.on("mensajeNuevo", async ({author: { id, nombre, apellido, edad, alias, avatar}, text}) => {
+    const message = {author: { id, nombre, apellido, edad, alias, avatar}, text};
     await MessagesDao.save(message);
 
     io.sockets.emit("mensajes", await MessagesDao.getAll());
   });
+
+  socket.emit("products", await ProductDao.getAll());
+
+  socket.on("add-product", async (data) => {
+    await ProductDao.save(data);
+    io.sockets.emit("products", await ProductDao.getAll());
+  });
 });
 
+app.use('/api/productos-test', routerTest);
 
-
-
-
-app.use("/api/productos", routerProducts);
-app.use("/api/messages", routerMessages);
-app.use("/api/productos-test", routerTest);
-
-
-app.use("*", (req, res) => {
-  res.send({ error: -1, descripcion: "ruta 'x' método 'y' no autorizada" });
+const server = httpServer.listen(PORT, () => {
+  console.log(`Servidor escuchando en puerto ${PORT}`);
+});
+server.on("error", (error) => {
+  console.error(`Error en el servidor ${error}`);
 });
 
-const server = app.listen(PORT, () => console.log(`Running on port ${PORT}`));
-server.on("error", (err) => console.log(err));

@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { MockService } from '../../services/index.js';
-import { successResponse } from "../../utils/index.js";
-import {HTTP_STATUS} from './constants/api.constants.js'
+import { MockService } from '../services/index.js';
+import { successResponse } from "../utils/index.js";
+import { HTTP_STATUS } from './constants/api.constants.js'
+
 const router = Router();
 const service= new MockService()
 
@@ -10,5 +11,9 @@ router.get("/", (req,res)=>{
   const response = successResponse(users);
   res.status(HTTP_STATUS.OK).json(response);
 });
+
+router.post("", (req, res) => {
+  
+})
 
 export {router as routerTest};

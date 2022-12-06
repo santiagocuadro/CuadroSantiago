@@ -5,18 +5,17 @@ function enviarMensaje(e) {
   const id = document.getElementById("id");
   const nombre = document.getElementById("nombre");
   const apellido = document.getElementById("apellido");
-  const edad = document.getElementById("adad");
+  const edad = document.getElementById("edad");
   const alias = document.getElementById("alias");
   const avatar = document.getElementById("avatar");
   const text = document.getElementById("text");
-  const mensaje = document.getElementById("mensaje");
 
-  if (!email.value || !mensaje.value) {
+  if (!id.value || !nombre.value || !apellido.value || !edad.value || !alias.value || !avatar.value || !text.value) {
     alert("Debe completar los campos");
     return false;
   }
 
-  socket.emit("mensajeNuevo", { id: id.value, nombre: nombre.value, apellido: apellido.value, edad: edad.value, alias: alias.value, avatar: avatar.value });
+  socket.emit("mensajeNuevo", {author: { id: id.value, nombre: nombre.value, apellido: apellido.value, edad: edad.value, alias: alias.value, avatar: avatar.value}, text: text.value});
   mensaje.value = "";
   return false;
 }
@@ -29,9 +28,43 @@ socket.on("mensajes", (mensajes) => {
   let mensajesHtml = mensajes
     .map(
       (mensaje) =>
-        `<span class="mensaje-listaMensajes">${mensaje.id}<b> ${mensaje.nombre} </b>${mensaje.apellido} </b>${mensaje.edad} </b>${mensaje.alias} </b>${mensaje.avatar}</span>`
+        `<span class="mensaje-listaMensajes">${mensaje.author.id}<b> ${mensaje.author.nombre} </b>${mensaje.author.apellido}  </b>${mensaje.author.edad}  </b>${mensaje.author.alias}  </b>${mensaje.author.avatar}  </b>${mensaje.text}</span>`
     )
     .join("<br>");
 
   document.getElementById("listaMensajes").innerHTML = mensajesHtml;
+});
+
+const createProductTable = async (products) => {
+  const template = await fetch("views/products-table.hbs");
+  const templateText = await template.text();
+  const templateCompiled = Handlebars.compile(templateText);
+  return templateCompiled({ products });
+};
+
+const addProduct = () => {
+  const title = document.getElementById("title");
+  const price = document.getElementById("price");
+  const thumbnail = document.getElementById("thumbnail");
+
+  if (!title.value || !price.value) {
+    alert("Debe completar los campos");
+  }
+
+  socket.emit("add-product", {
+    title: title.value,
+    price: price.value,
+    thumbnail: thumbnail.value,
+  });
+
+  title.value = "";
+  price.value = "";
+  thumbnail.value = "";
+};
+
+document.getElementById("add-product").addEventListener("click", addProduct);
+
+socket.on("products", async (products) => {
+  const template = await createProductTable(products);
+  document.getElementById("products").innerHTML = template;
 });
