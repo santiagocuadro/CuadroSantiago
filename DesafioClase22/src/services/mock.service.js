@@ -1,14 +1,23 @@
 import { createFakeUser } from "../utils/index.js";
 
 class MockService   {
-    items=[]
-    constructor(){}
-  getAll(qty = 5) {
-    for (let i = 1; i <= qty; i++) {
-      const newItem = createFakeUser(i);
-      this.items.push(newItem);
+  constructor(){
+    this.items=[]
+  }
+  getAll(){
+    this.populate(6);
+    return  this.items
+  }
+  getOne(id){
+    return this.items.find(item => item.id==id)
+  }
+  insert(obj){
+    this.items.push(obj)
+  }
+  populate(limit){
+    for (let index = 1; index < limit; index++) {
+      this.insert( createFakeUser(index) );
     }
-    return this.items;
   }
  
 }
