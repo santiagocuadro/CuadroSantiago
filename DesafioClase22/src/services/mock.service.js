@@ -5,7 +5,6 @@ class MockService   {
     this.items=[]
   }
   getAll(){
-    this.populate(6);
     return  this.items
   }
   getOne(id){
