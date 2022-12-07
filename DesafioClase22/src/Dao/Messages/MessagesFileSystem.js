@@ -3,6 +3,6 @@ import { config } from "../../config/index.js";
 
 export class MessagesFilesystem extends ContainerFileSystem {
   constructor() {
-    super(config.DATABASES.filesystem.CARTS_FILENAME);
+    super(config.DATABASES.filesystem.MESSAGES_FILENAME);
   }
 }

@@ -3,9 +3,9 @@ faker.locale = "es";
 
 const createFakeUser = (id) => {
   return {
-    nombre:faker.name.firstName(),
+    nombre:faker.internet.email(),
     price:faker.random.numeric(),
-    foto:faker.image.imageUrl()
+    foto:faker.image.imageUrl(),
   }
 };
 export {
