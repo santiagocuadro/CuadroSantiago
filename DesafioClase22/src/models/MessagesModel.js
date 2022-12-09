@@ -21,7 +21,7 @@ const MessagesSchema = new Schema(
 
 MessagesSchema.set("toJSON", {
   transform: (_, response) => {
-    delete response._id;
+    delete response.__v;
     return response;
   },
 });

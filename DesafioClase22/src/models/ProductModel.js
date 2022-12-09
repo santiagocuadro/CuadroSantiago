@@ -4,9 +4,9 @@ const ProductsCollection = "products";
 
 const ProductSchema = new Schema(
   {
-    nombre: { type: String, required: true, max: 100 },
-    precio: { type: Number, required: true },
-    foto: { type: String, required: true, max: 150 }
+    title: { type: String, required: true, max: 100 },
+    price: { type: Number, required: true },
+    thumbnail: { type: String, required: true, max: 100 },
   },
   {
     virtuals: true,

@@ -1,45 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="ISO-8859-1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sala de Chat!</title>
-    <link rel="stylesheet" href="styles/index.css">
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-    
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <script type="module" src="./js/index.js"></script>
+        <link rel="stylesheet" href="./style/index.css">
+        
+        <title>Clase 22</title>
+    </head>
 
-<body>
-    <div id="product-form_container">
-        <h3>Agregar producto</h3>
-        <form>
-            <input type="text" id="title" placeholder="Título">
-            <input type="number" id="price" placeholder="precio">
-            <input type="text" id="thumbnail" placeholder="enlace miniatura">
-            <input id="add-product" type="button" value="Enviar">
-        </form>
-    </div>
+    <body>
+        <h1>Clase 22</h1>
 
-    <div id="products"></div>
+        <button id="getProductsBtn">Ver Productos</button>
 
-    <form>
-      <input type="text" id="id" placeholder="id">
-      <input type="text" id="nombre" placeholder="nombre">
-      <input type="text" id="apellido" placeholder="apellido">
-      <input type="number" id="edad" placeholder="edad">
-      <input type="text" id="alias" placeholder="avatar">
-      <input type="text" id="avatar" placeholder="avatar">
-      <input type="text" id="text" placeholder="text">
-      <input id="messagesFormBtn" type="submit" value="Enviar">
-    </form>
-    
-    <div id="listaMensajes" class="messages-list_container"></div>
+        <div id="productsContainer"></div>
 
-    <script src="/js/main.js"></script>
-
-</body>
+       
+    </body>
 
 </html>

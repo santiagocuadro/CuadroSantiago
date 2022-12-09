@@ -1,6 +1,7 @@
 import fs from "fs";
 
 class ContainerFileSystem {
+
   constructor(nombre) {
     this.nombreArchivo = `./src/db/${nombre}.json`;
   }
@@ -22,7 +23,7 @@ class ContainerFileSystem {
         this.nombreArchivo,
         JSON.stringify(arrayObj, null, 3)
       );
-      return obj.id;
+      return obj;
     } catch (error) {
       console.log(`Error en Save: ${error}`);
     }
@@ -32,7 +33,6 @@ class ContainerFileSystem {
   async getById(id) {
     try {
       const elements = await this.getAll();
-
       const foundElement = elements.find((element) => element.id == id);
 
       if (!foundElement) return null;
@@ -45,17 +45,17 @@ class ContainerFileSystem {
 
   // Devuelve un array con los objetos presentes en el archivo
   async getAll() {
-    let result = [];
     try {
-      const file = await fs.promises.readFile(this.nombreArchivo, "utf8");
+      const file = await fs.promises.readFile(this.filePath, "utf8");
       const elements = JSON.parse(file);
+
       return elements;
     } catch (error) {
-      await fs.promises.writeFile(
-        this.nombreArchivo,
-        JSON.stringify([], null, 3)
-      );
-      return [];
+      if (error.code === "ENOENT") {
+        await fs.promises.writeFile(this.filePath, JSON.stringify([], null, 3));
+        return [];
+      }
+      console.log(error);
     }
   }
 
@@ -88,6 +88,27 @@ class ContainerFileSystem {
       console.log(error);
     }
   }
+
+  async updateById(id, newData) {
+    let archivo = await this.getAll();
+    const foundElementIndex = archivo.findIndex(
+      (element) => element.id == id
+    );
+
+    if (foundElementIndex === -1) return null;
+
+    newData['id'] = Number(id);
+    
+    archivo.splice(foundElementIndex, 1, newData);
+
+    await fs.promises.writeFile(
+      this.nombreArchivo,
+      JSON.stringify(archivo, null, 3)
+    );
+
+    return newData;
+  }
+
 }
 
 export { ContainerFileSystem };

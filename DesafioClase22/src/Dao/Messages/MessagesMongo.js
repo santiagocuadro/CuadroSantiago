@@ -5,7 +5,7 @@ export class MessagesMongo extends MongoDBContainer {
   constructor() {
     super({
       name: MessagesModel.MessagesCollection,
-      schema: MessagesModel.MessagesSchema
+      schema: MessagesModel.MessagesSchema,
     });
   }
 }

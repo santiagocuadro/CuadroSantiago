@@ -1,27 +1,25 @@
 {
-  "name": "desafio6",
+  "name": "primerentrega",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
-    "dayjs": "^1.11.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "knex": "^2.1.0",
+    "express-handlebars": "^6.0.6",
+    "firebase-admin": "^11.3.0",
     "mongoose": "^6.8.0",
-    "mysql": "^2.18.1",
-    "normalizr": "^3.6.2",
-    "socket.io": "^4.5.3",
-    "sqlite3": "^5.0.9"
+    "normalizr": "^3.6.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
