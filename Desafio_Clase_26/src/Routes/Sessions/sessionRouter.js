@@ -24,7 +24,7 @@ router.get("/login", Authenticated,(req, res) => {
 
 router.get("/logout", (req, res) => {
   const { username } = req.user;
-  req.logout();
+  req.logOut({}, () => true);
   res.render("view/logout", { username: username });
 });
 
