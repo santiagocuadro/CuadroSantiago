@@ -22,10 +22,13 @@ app.use(session({
   saveUninitialized: false
 }))
 
-
+// Desafio sessions 
 app.use('/', routerSession);
+
 app.use('/api/productos', routerProducts);
 app.use('/api/mensajes', routerMessage);
+
+// Mocks para productos
 app.use('/api/products-test', routerTest);
 
 app.use('*', (req, res) => {

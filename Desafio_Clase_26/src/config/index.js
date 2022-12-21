@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const PRODUCTS_FILENAME = "products";
-const CARTS_FILENAME = "carts";
+const MESSAGES_FILENAME = "messages";
 
 const config = {
   SERVER: {
@@ -12,15 +12,11 @@ const config = {
   DATABASES: {
     filesystem: {
       PRODUCTS_FILENAME,
-      CARTS_FILENAME,
+      MESSAGES_FILENAME,
     },
     mongo: {
       url: process.env.MONGO_DB_URL,
       dbName: process.env.MONGO_DB_NAME,
-    },
-    fireBase: {
-      config_DB: process.env.config_DB,
-      dbName: process.env.FIREBASE_DB_NAME,
     }
   },
 };
