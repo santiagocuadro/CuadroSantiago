@@ -5,6 +5,7 @@ import Authenticated from '../../middlewares/authenticated.js';
 
 const router = express.Router();
 
+
 router.post("/register", passport.authenticate("register", { failureRedirect: "/failregister" }), (req, res) => {
   res.redirect("/");
 });
@@ -23,8 +24,8 @@ router.get("/login", Authenticated,(req, res) => {
 
 router.get("/logout", (req, res) => {
   const { username } = req.user;
-  req.logout(username);
-  res.render("logout", { username: username });
+  req.logout();
+  res.render("view/logout", { username: username });
 });
 
 router.get("/register", (req, res) => {
@@ -41,11 +42,11 @@ router.get("/faillogin", (req, res) => {
 
 
 router.post('/productos', async (req, res) => {
-  const { producto, precio, urlImagen } = req.query;
+  const { producto, precio, urlImagen } = req.body;
   const productoParaGuardar = { producto, precio, urlImagen };
   await ProductDao.save(productoParaGuardar);
   const productos = ProductDao.getAll();
-  res.render('view/home', { productos, producto, precio, urlImagen })
+  res.render('view/home', { productos, username: req.user.username })
 });
 
 
