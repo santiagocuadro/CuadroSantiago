@@ -8,10 +8,12 @@ import cookieParser from "cookie-parser";
 import {Strategy as LocalStrategy} from 'passport-local';
 import * as strategy from './passport/strategy.js';
 import { User } from './models/index.js';
-import { routerProducts, routerMessage, routerTest, routerSession } from './Routes/index.js';
+import { routerProducts, routerMessage, routerTest, routerSession, routerInfo } from './Routes/index.js';
+import parseArgs from 'minimist';
 
-const PORT = 8080;
 const app = express();
+const args = parseArgs(process.argv.slice(2))
+const PORT =  args.PORT;
 
 app.use(cookieParser());
 
@@ -67,8 +69,11 @@ app.use('/', routerSession);
 
 app.use('/api/productos', routerProducts);
 app.use('/api/mensajes', routerMessage);
+
 // Mocks para productos
 app.use('/api/products-test', routerTest);
+
+app.use('/info', routerInfo);
 
 app.use('*', (req, res) => {
   res.send({ error: -1, descripcion: 'ruta "x" método "y" no autorizada' });
