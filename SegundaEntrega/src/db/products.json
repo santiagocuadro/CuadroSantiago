@@ -1,0 +1,121 @@
+[
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "precio": 50000,
+		 "stock": 55,
+		 "timestamp": "1/11/2022 14:56:48",
+		 "id": 1
+	},
+	{
+		 "nombre": "nuevo4",
+		 "descripcion": "este es el nuevo elemento 4",
+		 "codigo": 1234,
+		 "foto": "asdfsfdasdfa",
+		 "precio": 500234432100,
+		 "stock": 535,
+		 "timestamp": "1/11/2022 22:07:26",
+		 "id": 3
+	},
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "precio": 50000,
+		 "stock": 55,
+		 "timestamp": "1/11/2022 18:14:09",
+		 "id": 5
+	},
+	{
+		 "nombre": "nuevo4",
+		 "descripcion": "este es el nuevo elemento 4",
+		 "codigo": 1234,
+		 "foto": "asdfsfdasdfa",
+		 "precio": 500234432100,
+		 "stock": 535,
+		 "timestamp": "1/11/2022 22:07:30",
+		 "id": 6
+	},
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "precio": 50000,
+		 "stock": 55,
+		 "timestamp": "1/11/2022 21:58:15",
+		 "id": 7
+	},
+	{
+		 "nombre": "nuevo4",
+		 "descripcion": "este es el nuevo elemento 4",
+		 "codigo": 1234,
+		 "foto": "asdfassfdasdfa",
+		 "precio": 500234432100,
+		 "stock": 535,
+		 "timestamp": "2/11/2022 16:09:54",
+		 "id": 8
+	},
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "stock": 55,
+		 "timestamp": "1/11/2022 21:58:24",
+		 "id": 9
+	},
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "precio": 50000,
+		 "stock": 55,
+		 "timestamp": "1/11/2022 21:58:42",
+		 "id": 10
+	},
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "precio": 50000,
+		 "stock": 55,
+		 "timestamp": "1/11/2022 22:02:27",
+		 "id": 11
+	},
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "precio": 50000,
+		 "stock": 55,
+		 "timestamp": "1/11/2022 22:05:52",
+		 "id": 12
+	},
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "precio": 50000,
+		 "stock": 55,
+		 "timestamp": "2/11/2022 16:10:19",
+		 "id": 13
+	},
+	{
+		 "nombre": "santi",
+		 "descripcion": "hola",
+		 "codigo": 1234,
+		 "foto": "foto",
+		 "precio": 50000,
+		 "stock": 55,
+		 "timestamp": "2/11/2022 16:10:20",
+		 "id": 14
+	}
+]
