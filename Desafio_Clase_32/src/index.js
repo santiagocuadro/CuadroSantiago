@@ -11,6 +11,8 @@ import { User } from './models/index.js';
 import { routerProducts, routerMessage, routerTest, routerSession, routerInfo, routerRandoms } from './Routes/index.js';
 import parseArgs from 'minimist';
 
+
+
 const app = express();
 const args = parseArgs(process.argv.slice(2))
 const PORT =  args.PORT;
@@ -80,16 +82,57 @@ app.use('*', (req, res) => {
   res.send({ error: -1, descripcion: 'ruta "x" método "y" no autorizada' });
 });
 
-const server = app.listen(PORT, async () => {
-  console.log(`Running on port ${PORT}`)
-  try {
-    await mongoose.connect(MONGO_DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+
+if (args.modo == 'cluster') {
+
+  if (cluster.isPrimary) {
+    console.log(`Primary ${process.pid} is running`);
+    console.log('modo cluster')
+  
+    // Fork workers.
+    for (let i = 0; i < cpuCount; i++) {
+      cluster.fork();
+    }
+  
+    cluster.on('exit', (worker, code, signal) => {
+      console.log(`worker ${worker.process.pid} died`);
     });
-    console.log("Connected DB");
-  } catch (error) {
-    console.log(`Error en conexión de Base de datos: ${error}`);
+  } else {
+    // Workers can share any TCP connection
+    // In this case it is an HTTP server
+    
+  const server = app.listen(PORT, async () => {
+    console.log(`Running on port ${PORT}`);
+    try {
+      await mongoose.connect(MONGO_DB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+      console.log("Connected DB");
+    } catch (error) {
+      console.log(`Error en conexión de Base de datos: ${error}`);
+    }
+  });
+  server.on("error", (error) => console.log(`Error en servidor ${error}`));
+    
+  
+    console.log(`Worker ${process.pid} started`);
   }
-});
-server.on('error', (err) => console.log(err));
+
+} else {
+  const server = app.listen(PORT, async () => {
+    console.log(`Running on port ${PORT}`)
+    try {
+      await mongoose.connect(MONGO_DB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+      console.log("Connected DB");
+    } catch (error) {
+      console.log(`Error en conexión de Base de datos: ${error}`);
+    }
+  });
+  server.on('error', (err) => console.log(err));
+}
+
+

@@ -2,6 +2,7 @@ import express from 'express';
 import passport from "passport";
 import { ProductDao } from '../../Dao/index.js';
 import Authenticated from '../../middlewares/authenticated.js';
+import {HTTP_STATUS} from '../../constants/api.constants.js';
 
 const router = express.Router();
 
@@ -42,11 +43,17 @@ router.get("/faillogin", (req, res) => {
 
 
 router.post('/productos', async (req, res) => {
-  const { producto, precio, urlImagen } = req.body;
-  const productoParaGuardar = { producto, precio, urlImagen };
-  await ProductDao.save(productoParaGuardar);
-  const productos = ProductDao.getAll();
-  res.render('view/home', { productos, username: req.user.username })
+  try {
+    const { producto, precio, urlImagen } = req.body;
+    await ProductDao.save({ producto, precio, urlImagen });
+    const productos = await ProductDao.getAll();
+    res.status(HTTP_STATUS.OK);
+    res.render('view/home', { productos, username: req.user.username })
+
+  } catch (error) {
+    console.log(`Error ${error}`);
+    res.status(HTTP_STATUS.NOT_FOUND);
+  }
 });
 
 

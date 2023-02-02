@@ -1,4 +1,4 @@
-import { User } from "../models/index.js";
+import { User } from '../models/index.js';
 import bCrypt from "bcrypt";
 
 
@@ -12,20 +12,21 @@ var createHash = function (password) {
 
 const login = (req, username, password, cb) => {
   User.findOne({ username: username }, (err, user) => {
+    console.log(`ACAAAAAA${user}`);
     if (err) return cb(err);
     if (!user) {
-      console.log("User Not Found with username " + username);
+      console.log("Invalid user" + username);
       return cb(null, false);
     }
     if (!validatePassword(user, password)) {
-      console.log("Invalid Password");
+      console.log("Invalid user");
       return cb(null, false);
     }
     return cb(null, user);
   });
 }
 
-const register = (req, username, password, cb) =>{
+const register = (req, username, password, cb) => {
   User.findOne({ username: username }, function (err, user) {
       if (err) {
           console.log("Error in SignUp: " + err);
@@ -36,9 +37,16 @@ const register = (req, username, password, cb) =>{
           return cb(null, false);
       } else {
           const newUser = new User();
+          const data = req.body;
           newUser.username = username;
           newUser.password = createHash(password);
-          newUser.save().then(datos => cb(null,datos)).catch(null,false)
+          newUser.firstname = data.firstname;
+          newUser.age = data.age;
+          newUser.direction = data.direction;
+          newUser.telephone = data.telephone;
+          newUser.avatar = data.avatar;
+
+          newUser.save().then(datos => cb(null,datos)).catch(null,false);
       }
   });
 }

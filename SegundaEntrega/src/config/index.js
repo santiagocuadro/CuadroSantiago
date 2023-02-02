@@ -18,10 +18,6 @@ const config = {
       url: process.env.MONGO_DB_URL,
       dbName: process.env.MONGO_DB_NAME,
     },
-    fireBase: {
-      config_DB: process.env.config_DB,
-      dbName: process.env.FIREBASE_DB_NAME,
-    }
   },
 };
 

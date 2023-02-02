@@ -22,7 +22,7 @@ app.engine("hbs", engine({extname: ".hbs",defaultLayout: "index.hbs",}));
 app.set("view engine", "hbs");
 app.set('views', './public');
 
-const MONGO_DB_URI = process.env.MONGO_DB_URL || 'mongodb://localhost:27017';
+const MONGO_DB_URI = process.env.MONGO_DB_URL;
 
 app.use(session({
   store:MongoStore.create({
