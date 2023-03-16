@@ -49,7 +49,7 @@ class Producto {
 }
 
 
-const productosMap = {};
+const productosMap = ProductDao.getAll();
 
 const getAll = ({  campo, valor }) => {
 const productos = Object.values(productosMap)
