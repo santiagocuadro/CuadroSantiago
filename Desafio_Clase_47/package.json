@@ -1,24 +1,21 @@
 {
-  "name": "tercerentrega",
+  "name": "desafio_clase_46",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
-  "type": "module",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "test": "mocha src/Tests/axios.test.js",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.2",
     "axios": "^1.3.4",
     "bcrypt": "^5.1.0",
     "chai": "^4.3.7",
     "connect-mongo": "^4.6.0",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
     "firebase-admin": "^11.3.0",
